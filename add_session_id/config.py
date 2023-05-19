@@ -25,7 +25,7 @@ def get_logger(logging_level: str, log_dir: Optional[Path] = None, logging_dir_l
     return base_logger
 
 
-env_dict = get_env_dict(Path(__file__).parent)
+env_dict = get_env_dict(Path(__file__).parents[1])
 logger = get_logger(
     logging_level=env_dict.get("LOGGING_LEVEL", "INFO"),
     log_dir=env_dict.get("LOGGING_DIR_LEVEL", None),

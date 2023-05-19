@@ -2,7 +2,7 @@ import argparse
 import sys
 from pathlib import Path
 
-from config.config import env_dict, logger
+from config import env_dict, logger
 
 from add_session_id.session_addder import SessionAdder
 from add_session_id.utils import generate_df, read_df, write_to_csv
@@ -13,16 +13,18 @@ def createParser():
     parser = argparse.ArgumentParser()
     for argument in [("-sres", "--saveres"), ("-sgen", "--savegen"), ("-ff", "--fromfile")]:
         parser.add_argument(argument[0], argument[1])
-
     return parser
 
 
 if __name__ == "__main__":
     namespace = createParser().parse_args(sys.argv[1:])
 
-    df_from_file = json.loads(namespace.fromfile.lower())
-    save_gen_df = json.loads(namespace.savegen.lower())
-    save_res_df = json.loads(namespace.saveres.lower())
+    def str_to_bool(x):
+        json.loads(x.lower())
+
+    df_from_file = str_to_bool(namespace.fromfile)
+    save_gen_df = str_to_bool(namespace.savegen)
+    save_res_df = str_to_bool(namespace.saveres)
 
     n_customers = int(env_dict.get("N_CUSTOMERS"))
     n_products = int(env_dict.get("N_PRODUCTS"))

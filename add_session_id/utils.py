@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 from pandas import DataFrame
 
-from add_session_id.config.config import logger
+from add_session_id.config import logger
 
 
 def logger_dec(func_info: str) -> callable:
@@ -21,7 +21,6 @@ def logger_dec(func_info: str) -> callable:
     def decorator(func: callable) -> callable:
         @wraps(func)
         def wrapper(*args, **kwargs):
-
             start_time = datetime.now()
             logger.info(f"start {func_info}")
 
@@ -38,8 +37,14 @@ def logger_dec(func_info: str) -> callable:
 
 @logger_dec("creating df")
 def generate_df(
-    n_customers: int, n_products: int, n_rows: int, start: str, end: str, file_path: str, save_to_file: bool = True
-) -> None:
+    n_customers: int = 1_000,
+    n_products: int = 1_000_000,
+    n_rows: int = 100_000_000,
+    start: str = "2022-01-01 00:00:00",
+    end: str = "2023-01-01 00:00:00",
+    file_path: str = "./add_session_id/data/data.csv",
+    save_to_file: bool = True,
+) -> DataFrame:
 
     logger.debug(f"{n_customers=}, {n_products=}, {n_rows=}, {start=}, {end=}, {file_path=}")
 
@@ -47,7 +52,11 @@ def generate_df(
         "customer_id": np.random.randint(1, n_customers + 1, size=n_rows, dtype="uint32"),
         "product_id": np.random.randint(1, n_products + 1, size=n_rows, dtype="uint64"),
         "timestamp": pd.to_datetime(
-            np.random.randint(pd.to_datetime(start).value // 10 ** 9, pd.to_datetime(end).value // 10 ** 9, n_rows),
+            np.random.randint(
+                pd.to_datetime(start).value // 10 ** 9,
+                pd.to_datetime(end).value // 10 ** 9,
+                n_rows,
+            ),
             unit="s",
         ),
     }
@@ -74,3 +83,16 @@ def read_df(file_path: Path = Path("./add_session_id/data/data.csv"), n_rows: in
 @logger_dec("writing to csv")
 def write_to_csv(df: DataFrame, output_file_path: Path = Path("./add_session_id/data/new_data.csv")) -> None:
     df.to_csv(output_file_path, index=False)
+
+
+# df = generate_df(
+#         n_customers = 2,
+#         n_products = 10,
+#         n_rows = 10,
+#         start = "2022-01-01 00:00:00",
+#         end = "2022-01-01 00:10:00",
+#         file_path = "./add_session_id/data/test_data.csv",
+#         save_to_file = False,
+#     )
+
+# write_to_csv(df.sort_values(["customer_id", "timestamp"]), "/home/roman/add_session_id_project/tests/tests_data/test_data.csv")
