@@ -1,3 +1,9 @@
+add_session_id/data/*
+
+# DotEnv configuration
+.env
+secret.env
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
