@@ -51,7 +51,7 @@ def generate_df(
     start: str = "2022-01-01 00:00:00",
     end: str = "2023-01-01 00:00:00",
     save_to_file: bool = False,
-    file_path: str = "./add_session_id/data/data.csv",
+    file_path: str = "./data/data_generated.csv",
 ) -> DataFrame:
 
     logger.debug(f"{n_customers=}, {n_products=}, {n_rows=}, {start=}, {end=}, {file_path=}")
@@ -79,7 +79,7 @@ def generate_df(
 
 
 @logger_dec("reading from csv")
-def read_df(file_path: Path = Path("./add_session_id/data/data.csv"), n_rows: int = 100_000_000) -> DataFrame:
+def read_df(file_path: Path = Path("./data/data.csv"), n_rows: int = 100_000_000) -> DataFrame:
     logger.debug(f"{file_path=}, {n_rows=}")
 
     return pd.read_csv(
@@ -91,5 +91,5 @@ def read_df(file_path: Path = Path("./add_session_id/data/data.csv"), n_rows: in
 
 
 @logger_dec("writing to csv")
-def write_to_csv(df: DataFrame, output_file_path: Path = Path("./add_session_id/data/new_data.csv")) -> None:
+def write_to_csv(df: DataFrame, output_file_path: Path = Path("./data/new_data.csv")) -> None:
     df.to_csv(output_file_path, index=False)
