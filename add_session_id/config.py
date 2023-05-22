@@ -7,7 +7,7 @@ from loguru import logger as base_logger
 
 
 def get_env_dict(env_dir: Optional[Path]):
-    env_shared = dotenv_values(str(env_dir / "shared.env"))
+    env_shared = dotenv_values(str(env_dir / "config.env"))
     env_secret = dotenv_values(str(env_dir / "secret.env"))
     env_dict = {**env_shared, **env_secret, **os.environ}
     env_dict = {k: v for k, v in env_dict.items() if ("<secret>" not in v) or ("<project>" not in v)}

@@ -34,7 +34,7 @@ class SessionAdder:
     @logger_dec("adding 'session_id' column")
     def add_session_id(cls: "SessionAdder", df: DataFrame) -> DataFrame:
         """
-        Add calculate and add column 'session_id' to dataframe\n
+        Сalculate and add column 'session_id' to dataframe\n
         Parameters
         ----------
         df : DataFrame

@@ -1,8 +1,8 @@
-# Calculate and add "session_id" to dataframe
+# Вычисляем и добавляем колонку "session_id" к датафрейму
 Пример работы с pandas
 
 ![image](https://user-images.githubusercontent.com/40138357/199262774-42d5806c-b802-4a4e-8643-f572bbaa3b6d.png)
 
-The repository contains two scripts. The first is generate.py, which allows you to generate an array of data in .csv format. To do this, you need to write in the script these parameters and the full path with the name of the file where the dataset will be saved. The second one is main.py, which contains the solution of the problem. In it you also need to specify the path to the dataset
+Репозиторий содержит два скрипта. Первый - generate.py, который позволяет сгенерировать массив данных в формате .csv. Для этого необходимо прописать в скрипте данные параметры и полный путь с именем файла, в котором будет сохранен массив данных. Второй скрипт - main.py, который содержит решение задачи. В нем также нужно указать путь к набору данных.
 
-The script requires python version 3.10 and the libraries listed in the requirements.txt file
+Для работы скрипта требуется python версии 3.10 и библиотеки, перечисленные в файле requirements.txt

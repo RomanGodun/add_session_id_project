@@ -1,3 +1,4 @@
+import traceback
 from datetime import datetime
 from functools import wraps
 from pathlib import Path
@@ -21,12 +22,19 @@ def logger_dec(func_info: str) -> callable:
     def decorator(func: callable) -> callable:
         @wraps(func)
         def wrapper(*args, **kwargs):
+            # get real file and line what was called
+            file = "/".join(traceback.extract_stack()[-2].filename.split("/")[-2:])
+            function_name = func.__name__
+            line = traceback.extract_stack()[-2].lineno
+
             start_time = datetime.now()
-            logger.info(f"start {func_info}")
+            logger.patch(lambda r: r.update(function=function_name, name=file, line=line)).info(f"start {func_info}")
 
             res = func(*args, **kwargs)
 
-            logger.info(f"finish {func_info} ({datetime.now() - start_time})")
+            logger.patch(lambda r: r.update(function=function_name, name=file)).info(
+                f"finish {func_info} ({datetime.now() - start_time})"
+            )
 
             return res
 
@@ -42,8 +50,8 @@ def generate_df(
     n_rows: int = 100_000_000,
     start: str = "2022-01-01 00:00:00",
     end: str = "2023-01-01 00:00:00",
+    save_to_file: bool = False,
     file_path: str = "./add_session_id/data/data.csv",
-    save_to_file: bool = True,
 ) -> DataFrame:
 
     logger.debug(f"{n_customers=}, {n_products=}, {n_rows=}, {start=}, {end=}, {file_path=}")
@@ -61,6 +69,8 @@ def generate_df(
         ),
     }
     df = pd.DataFrame(random_data)
+
+    logger.debug(f"\n{df}")
 
     if save_to_file:
         df.to_csv(file_path, index=False)
@@ -83,16 +93,3 @@ def read_df(file_path: Path = Path("./add_session_id/data/data.csv"), n_rows: in
 @logger_dec("writing to csv")
 def write_to_csv(df: DataFrame, output_file_path: Path = Path("./add_session_id/data/new_data.csv")) -> None:
     df.to_csv(output_file_path, index=False)
-
-
-# df = generate_df(
-#         n_customers = 2,
-#         n_products = 10,
-#         n_rows = 10,
-#         start = "2022-01-01 00:00:00",
-#         end = "2022-01-01 00:10:00",
-#         file_path = "./add_session_id/data/test_data.csv",
-#         save_to_file = False,
-#     )
-
-# write_to_csv(df.sort_values(["customer_id", "timestamp"]), "/home/roman/add_session_id_project/tests/tests_data/test_data.csv")
