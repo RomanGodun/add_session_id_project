@@ -1,1 +1,0 @@
-python add_session_id/main.py -sgen=False -sres=False -ff=False

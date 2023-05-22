@@ -1,0 +1,1 @@
+pytest -v --capture=no  tests/test_session_adder.py
