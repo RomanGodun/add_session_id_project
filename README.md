@@ -18,6 +18,8 @@
 
 - Реализация основного алгоритма - _add_session_id/session_addder.py_ (_SessionAdder.add_session_id_)
 - Дополнительные утилиты - _add_session_id/utils.py_
+- Логгер-декоратор - _add_session_id/utils.py_
+- Инициализация конфигов - _add_session_id/config.py_
 - Тесты - _tests/test_session_adder.py_:
 </br>
 
