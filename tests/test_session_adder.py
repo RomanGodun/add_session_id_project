@@ -1,5 +1,5 @@
 from pathlib import Path
-from time import time
+from time import perf_counter
 
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -77,7 +77,7 @@ def test_session_adder_time_complexity():
     for i in range(1, 11):
 
         n_rows = int(i * 1e7)
-        start = time()
+        start = perf_counter()
 
         df = generate_df(
             n_customers=int(n_rows / 100_000),
@@ -89,7 +89,7 @@ def test_session_adder_time_complexity():
 
         df = SessionAdder.add_session_id(df)
 
-        time_diff = int((time() - start) * 10 ** 3)
+        time_diff = int((perf_counter() - start) * 10 ** 3)
 
         logger.info(f"{n_rows=} done, time: {time_diff} ms \n")
         observations[format(n_rows, ".0e")] = time_diff
