@@ -1,5 +1,5 @@
 # Вычисляем и добавляем колонку "session_id" к датафрейму
-![image](https://user-images.githubusercontent.com/40138357/199262774-42d5806c-b802-4a4e-8643-f572bbaa3b6d.png)
+![image](https://github.com/RomanGodun/add_session_id_project/assets/40138357/7e0bf597-c7ed-4f79-93a1-01cbad6d376b)
 
 Пример входного датафрейма:
 
